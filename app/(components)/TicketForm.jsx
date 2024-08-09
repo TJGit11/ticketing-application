@@ -4,14 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const TicketForm = () => {
-  const startingTicketData = {
-    title: "",
-    description: "",
-    priority: 1,
-    progress: 0,
-    status: "not started",
-    category: "Hardware Problem",
-  };
+  const router = useRouter();
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -23,10 +16,29 @@ const TicketForm = () => {
     }));
   };
 
-  const handleSubmit = () => {
-    console.log("submitted");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const res = await fetch("/api/Tickets", {
+      method: "POST",
+      body: JSON.stringify({ formData }),
+      "content-type": "application/json",
+    });
+    if (!res.ok) {
+      throw new Error("Failed to create ticket");
+    }
+
+    router.refresh();
+    router.push("/");
   };
 
+  const startingTicketData = {
+    title: "",
+    description: "",
+    priority: 1,
+    progress: 0,
+    status: "not started",
+    category: "Hardware Problem",
+  };
   const [formData, setFormData] = useState(startingTicketData);
   return (
     <div className="flex justify-center">
@@ -115,6 +127,7 @@ const TicketForm = () => {
             value={5}
             checked={formData.priority == 5}
           />
+          <label>5</label>
         </div>
         <label>Progress</label>
         <input
@@ -124,7 +137,15 @@ const TicketForm = () => {
           value={formData.progress}
           min="0"
           max="100"
+          onChange={handleChange}
         />
+        <label>Status</label>
+        <select name="status" value={formData.status} onChange={handleChange}>
+          <option value="not started">Not Started</option>
+          <option value="started">Started</option>
+          <option value="done">Done</option>
+        </select>
+        <input type="submit" className="btn" value="Create Ticket" />
       </form>
     </div>
   );
