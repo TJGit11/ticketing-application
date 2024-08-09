@@ -13,6 +13,16 @@ const TicketForm = () => {
     category: "Hardware Problem",
   };
 
+  const handleChange = (e) => {
+    const value = e.target.value;
+    const name = e.target.name;
+
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   const [formData, setFormData] = useState(startingTicketData);
   return (
     <div className="flex justify-center">
