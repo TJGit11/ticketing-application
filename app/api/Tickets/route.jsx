@@ -19,6 +19,6 @@ export async function GET() {
     const tickets = await Ticket.find();
     return NextResponse.jason({ tickets }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ message: "Error", erro }, { status: 500 });
+    return NextResponse.json({ message: "Error", error }, { status: 500 });
   }
 }
