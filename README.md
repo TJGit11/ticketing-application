@@ -1,5 +1,5 @@
 ![Screenshot of the application's dashboard](ticketapp.png)
-![Screenshot of the application's ticket creation page](ticketapp-1.png)
+![Screenshot of the application's ticket creation page](ticketapp1.png)
 
 ![Screenshot of the application's update page](ticketapp2.png)
 
